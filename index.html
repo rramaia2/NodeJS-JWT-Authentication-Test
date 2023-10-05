@@ -30,7 +30,7 @@
             <div>
                 <button onclick="login()">Login</button>
                 <button onclick="changeRoute('dashboard')">Get Dashboard</button>
-                <!-- <button onclick="changeRoute('settings')">Get Settings</button> -->
+                <button onclick="changeRoute('settings')">Get Settings</button>
             </div>
         </main>
     </div>
@@ -71,6 +71,11 @@
                 }
             }).catch(err => {
                 console.error(err); // Log any errors for debugging
+                if (err.response.status === 401) {
+                    // Token expired, reload the page
+                    localStorage.removeItem('jwt');
+                    window.location.href = '/';
+                }
             });
         }
 
